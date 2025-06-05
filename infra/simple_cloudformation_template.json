@@ -1,0 +1,19 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "TestS3Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "BucketName": "test-github-actions-bucket"
+            }
+        }
+    },
+    "Outputs": {
+        "BucketName": {
+            "Description": "Name of the S3 bucket",
+            "Value": {
+                "Ref": "TestS3Bucket"
+            }
+        }
+    }
+}
