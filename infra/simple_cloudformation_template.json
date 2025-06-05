@@ -1,0 +1,30 @@
+name: Deploy Test CloudFormation Stack
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials using OIDC
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        role-to-assume: arn:aws:iam::643275918916:role/GithubDepoloyment
+        aws-region: us-east-1
+
+    - name: Deploy CloudFormation stack
+      run: |
+        aws cloudformation deploy \
+          --stack-name test-github-actions-stack \
+          --template-file infra/simple_cloudformation_template.json \
+          --capabilities CAPABILITY_NAMED_IAM
